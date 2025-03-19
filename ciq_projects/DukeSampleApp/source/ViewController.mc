@@ -39,4 +39,18 @@ class ViewController {
 
         WatchUi.pushView(deviceView, new $.DeviceDelegate(deviceDataModel, deviceView), WatchUi.SLIDE_UP);
     }
+
+    // Return the “Main” screen as the initial view for the app
+    public function getMainView() as [MainView] or [MainView, MainDelegate] {
+        var mainView = new MainView();
+        var mainDelegate = new MainDelegate(self);
+        return [mainView, mainDelegate];
+    }
+
+    // Push the “Today’s Insights” screen
+    public function pushInsightsView() as Void {
+        var insightsView = new TodaysInsightsView();
+        var insightsDelegate = new TodaysInsightsDelegate(self);
+        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
+    }
 }
