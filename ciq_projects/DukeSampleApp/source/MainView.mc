@@ -80,32 +80,32 @@ class MainView extends WatchUi.View {
 
         // Arcs
         dc.drawBitmap(
-            centerX - 200, 
+            centerX - 190, 
             centerY - 65,
             _leftArc
         );
 
         dc.drawBitmap(
-            centerX - 185, 
-            centerY - 185,
+            centerX - 160, 
+            centerY - 160,
             _topLeftArc
         );
 
         dc.drawBitmap(
-            centerX - 85, 
-            centerY - 215,
+            centerX - 75, 
+            centerY - 190,
             _topArc
         );
 
         dc.drawBitmap(
-            centerX + 100, 
-            centerY - 185,
+            centerX + 90, 
+            centerY - 160,
             _topRightArc
         );
 
         dc.drawBitmap(
-            centerX + 185, 
-            centerY - 75,
+            centerX + 165, 
+            centerY - 65,
             _rightArc
         );
 

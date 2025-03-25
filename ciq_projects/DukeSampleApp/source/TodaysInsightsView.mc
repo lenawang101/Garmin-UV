@@ -69,39 +69,45 @@ class TodaysInsightsView extends WatchUi.View {
         // Icons
         dc.drawBitmap(
             centerX - 115, 
-            centerY - 150,
+            centerY - 140,
             _locationIcon
         );
 
         dc.drawBitmap(
             centerX - 150, 
-            centerY - 100,
+            centerY - 95,
             _exposureIcon
         );
 
         dc.drawBitmap(
-            centerX - 150, 
-            centerY - 25,
+            centerX - 145, 
+            centerY - 30,
             _riskIcon
         );
 
         dc.drawBitmap(
-            centerX - 150, 
-            centerY + 50,
+            centerX - 145, 
+            centerY + 35,
             _reminderIcon
         );
 
         dc.drawBitmap(
-            centerX - 150, 
-            centerY + 125,
+            centerX - 145, 
+            centerY + 90,
             _shadeAlertIcon
         );
 
 
         // Text
         dc.setColor(_textColor, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(centerX, centerY - 200, Graphics.FONT_TINY, "Today", Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(centerX + 10, centerY - 150, Graphics.FONT_SYSTEM_XTINY, _userLoc, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX, centerY - 180, Graphics.FONT_SYSTEM_XTINY, "Today", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX + 10, centerY - 140, Graphics.FONT_SYSTEM_XTINY, _userLoc, Graphics.TEXT_JUSTIFY_CENTER);
+
+        dc.drawText(centerX + 30, centerY - 95, Graphics.FONT_SYSTEM_XTINY, "Total Exposure Time", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX - 38, centerY - 30, Graphics.FONT_SYSTEM_XTINY, "Low Risk", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX + 30, centerY + 35, Graphics.FONT_SYSTEM_XTINY, "Sunscreen Reminder", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX - 26, centerY + 90, Graphics.FONT_XTINY, "Shade Alert", Graphics.TEXT_JUSTIFY_CENTER);
+
     }
 
     //! Called when this View is removed from the screen. Save the
