@@ -99,42 +99,26 @@ class DeviceView extends WatchUi.View {
         System.println("drawCustomValue()");
         
         if (customData != null) {
-            var font = Graphics.FONT_SYSTEM_SMALL;
+            // var font = Graphics.FONT_SYSTEM_SMALL;
             var dataSize = customData.size();
             var dataValuesLabel = "";
             if (dataSize > 0) {
-                var HELLO_WORLD = true;
-                if (HELLO_WORLD) {
-                    // Treat incoming customData as text
-                    var options = {
-                        :fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
-                        :toRepresentation => StringUtil.REPRESENTATION_STRING_PLAIN_TEXT,
-                        :encoding => StringUtil.CHAR_ENCODING_UTF8
-                        };
-                    dataValuesLabel = StringUtil.convertEncodedString(customData, options);
-                } else {
-                    // Treat in incoming customData as numeric, only print the first few
-                    var MAX_DISPLAY_COUNT = 5;
-                    var displayCount = dataSize > MAX_DISPLAY_COUNT ? MAX_DISPLAY_COUNT - 1 : dataSize - 1;
-                    for (var i = 0; i < displayCount; i++) {
-                        dataValuesLabel += customData[i].format("%3d") + ",";
-                    }
-                    dataValuesLabel += customData[displayCount].format("%3d");
-                }
+                // since we are sending a single byte
+                var uvValue = customData[0];  
+                dataValuesLabel = "UV: " + uvValue.toString();
+                dc.drawText(dc.getWidth() / 2, mYOffset, Graphics.FONT_LARGE, dataValuesLabel, Graphics.TEXT_JUSTIFY_CENTER);
+                mYOffset += dc.getFontHeight(Graphics.FONT_LARGE);
+                System.println("ONE BYTE");
+                System.println(customData);
+                System.println(dataValuesLabel);
             }
-            System.println("  dataValuesLabel " + dataValuesLabel);
-            dc.drawText(dc.getWidth() / 2, mYOffset, font, dataValuesLabel, Graphics.TEXT_JUSTIFY_CENTER);
-            mYOffset += dc.getFontHeight(font);
 
-            System.println("  customData.size() " + dataSize);
-            var dataSizeLabel = "dataSize: " + dataSize.toString();
-            font = Graphics.FONT_SYSTEM_XTINY;
-            dc.drawText(dc.getWidth() / 2, mYOffset, font, dataSizeLabel, Graphics.TEXT_JUSTIFY_CENTER);
-            mYOffset += dc.getFontHeight(font);
-
-            setButtonPositions(dc);  // Needs to happen after the custom data has been drawn the first time
+            // //checking if more than 1 byte - this never seems to execute
+            // if (dataSize >= 2) {  // Ensure at least 2 bytes were received
+            //     System.println("TWO OR MORE BYTES");
+            // }
         }
-    }
+    }   
 
     //! @param gpioData The GPIO data
     private function storeGpioData(gpioData as ByteArray?) as Void {
