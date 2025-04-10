@@ -95,7 +95,7 @@ class DeviceView extends WatchUi.View {
     //! Update the screen with the data received
     //! @param dc Device context
     //! @param customData The custom data
-    private function drawCustomData(dc as Dc, customData as ByteArray?) as Void {
+     private function drawCustomData(dc as Dc, customData as ByteArray?) as Void {
         System.println("drawCustomValue()");
         
         if (customData != null) {
@@ -108,9 +108,21 @@ class DeviceView extends WatchUi.View {
                 dataValuesLabel = "UV: " + uvValue.toString();
                 dc.drawText(dc.getWidth() / 2, mYOffset, Graphics.FONT_LARGE, dataValuesLabel, Graphics.TEXT_JUSTIFY_CENTER);
                 mYOffset += dc.getFontHeight(Graphics.FONT_LARGE);
-                System.println("ONE BYTE");
-                System.println(customData);
-                System.println(dataValuesLabel);
+                var riskLabel = "";
+                if (uvValue <= 2) {
+                    riskLabel = "Low Risk";
+                } else if (uvValue <= 7) { 
+                    riskLabel = "Moderate Risk";
+                } else {
+                    riskLabel = "High Risk"; // assuming uvValue >= 8
+                }
+
+                dc.drawText(dc.getWidth() / 2, mYOffset, Graphics.FONT_LARGE, riskLabel, Graphics.TEXT_JUSTIFY_CENTER);
+                mYOffset += dc.getFontHeight(Graphics.FONT_LARGE);
+                // System.println("ONE BYTE");
+                // System.println(customData);
+                // System.println(dataValuesLabel);
+                
             }
 
             // //checking if more than 1 byte - this never seems to execute

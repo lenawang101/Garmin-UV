@@ -102,8 +102,7 @@ class TodaysInsightsView extends WatchUi.View {
         dc.setColor(_textColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(centerX, centerY - 180, Graphics.FONT_SYSTEM_XTINY, "Today", Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(centerX + 10, centerY - 140, Graphics.FONT_SYSTEM_XTINY, _userLoc, Graphics.TEXT_JUSTIFY_CENTER);
-
-        dc.drawText(centerX + 30, centerY - 95, Graphics.FONT_SYSTEM_XTINY, "Total Exposure Time", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX - 5, centerY - 95, Graphics.FONT_SYSTEM_XTINY, "Total Exposure", Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(centerX - 38, centerY - 30, Graphics.FONT_SYSTEM_XTINY, "Low Risk", Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(centerX + 30, centerY + 35, Graphics.FONT_SYSTEM_XTINY, "Sunscreen Reminder", Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(centerX - 26, centerY + 90, Graphics.FONT_XTINY, "Shade Alert", Graphics.TEXT_JUSTIFY_CENTER);

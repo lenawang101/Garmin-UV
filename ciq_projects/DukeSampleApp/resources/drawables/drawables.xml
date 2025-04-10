@@ -6,11 +6,16 @@
     <bitmap id="PressureInd" filename="ic_pressure_24pt.png" />
     <bitmap id="TempInd" filename="ic_temp_24pt.png" />
     <bitmap id="Sun" filename="ic_figma_sun.png" />
-    <bitmap id="TopCurve" filename="ic_figma_top.png" />
-    <bitmap id="TopLeftCurve" filename="ic_figma_top_left.png" />
-    <bitmap id="TopRightCurve" filename="ic_figma_top_right.png" />
-    <bitmap id="LeftCurve" filename="ic_figma_left.png" />
-    <bitmap id="RightCurve" filename="ic_figma_right.png" />
+    <bitmap id="TopDefault" filename="ic_figma_top.png" />
+    <bitmap id="TopLeftDefault" filename="ic_figma_top_left.png" />
+    <bitmap id="TopRightDefault" filename="ic_figma_top_right.png" />
+    <bitmap id="LeftDefault" filename="ic_figma_left.png" />
+    <bitmap id="RightDefault" filename="ic_figma_right.png" />
+    <bitmap id="TopColor" filename="ic_orange.png" />
+    <bitmap id="TopLeftColor" filename="ic_yellow.png" />
+    <bitmap id="TopRightColor" filename="ic_red.png" />
+    <bitmap id="RightColor" filename="ic_purple.png" />
+    <bitmap id="LeftColor" filename="ic_green.png" />
     <bitmap id="Exposure" filename="ic_figma_exposure.png" />
     <bitmap id="Risk" filename="ic_figma_risk.png" />
     <bitmap id="Reminder" filename="ic_figma_reminder.png" />

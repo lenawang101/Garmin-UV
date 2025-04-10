@@ -24,7 +24,7 @@ class DeviceDelegate extends WatchUi.BehaviorDelegate {
     //! Handle the back behavior
     //! @return true if handled, false otherwise
     public function onBack() as Boolean {
-        _deviceDataModel.unpair();
+        // _deviceDataModel.unpair();
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;
     }

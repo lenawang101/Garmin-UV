@@ -8,6 +8,9 @@ import Toybox.BluetoothLowEnergy;
 import Toybox.Lang;
 import Toybox.WatchUi;
 using Toybox.System;
+import Toybox.Communications;
+import Toybox.Application.Storage;
+using Toybox.Time.Gregorian as Calendar;
 
 class EnvironmentProfileModel {
     private var _service as Service?;
@@ -131,9 +134,65 @@ class EnvironmentProfileModel {
     //! @param data The new custom data
     private function processCustomData(data as ByteArray) as Void {
         System.println("processCustomData(), data.size()=" + data.size());
-        _custom_data_byte_array = []b;
-        _custom_data_byte_array.addAll(data);
-        WatchUi.requestUpdate();
+
+        if (data.size() > 0) {
+            var uvVal = data[0].toNumber(); 
+            var now = Time.now().value();
+
+            // 1) Make a dictionary
+            var newEntry = {
+                :timestamp => now,
+                :uv => uvVal
+            } as Dictionary;
+
+            // 2) Load existing array from Storage
+            var storedUvReadings = Storage.getValue("uvReadings") as Array<Dictionary>?;
+            if (storedUvReadings == null) {
+                storedUvReadings = [] as Array<Dictionary>;
+            }
+
+            // 3) Add the new reading
+            storedUvReadings.add(newEntry);
+
+            // 4) Persist it
+            Storage.setValue("uvReadings", storedUvReadings);
+
+            // Then do anything else you need, e.g. request UI update...
+            WatchUi.requestUpdate();
+        }
+    }
+
+    private function uploadUVReadingToServer(uvVal as Number) as Void {
+        // Change during every instance
+        var url = "https://c0ed-152-3-43-46.ngrok-free.app/uv";
+
+        var params = {
+            "uv" => uvVal
+        };
+
+        var options = {
+            :method => Communications.HTTP_REQUEST_METHOD_POST,
+            :headers => { 
+                "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON 
+            },
+            :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+        };
+
+        var callback = self.method(:onServerResponse);
+
+        try {
+            Communications.makeWebRequest(url, params, options, callback);
+        } catch (ex) {
+            System.println("Error calling makeWebRequest: " + ex.getErrorMessage());
+        }
+    }
+
+    //! Called when the server responds
+    public function onServerResponse(statusCode as Number, data as String) as Void {
+        // TODO: Implement it.
+        System.println("Server response code: " + statusCode);
+        System.println("Server response body: " + data);
+        // If statusCode is 200, success. Otherwise, handle the error or just log it.
     }
 
     //! Process and set the custom data processLedData

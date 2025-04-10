@@ -33,7 +33,8 @@ class ScanDelegate extends WatchUi.BehaviorDelegate {
     public function onSelect() as Boolean {
         var displayResult = _scanDataModel.getDisplayResult();
         if (null != displayResult) {
-            _viewController.pushDeviceView(displayResult);
+            // Instead of pushing DeviceView, push MainView
+            _viewController.pushMainView(displayResult);
         }
         return true;
     }

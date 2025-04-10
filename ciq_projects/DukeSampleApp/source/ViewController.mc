@@ -41,16 +41,37 @@ class ViewController {
     }
 
     // Return the “Main” screen as the initial view for the app
-    public function getMainView() as [MainView] or [MainView, MainDelegate] {
-        var mainView = new MainView();
-        var mainDelegate = new MainDelegate(self);
-        return [mainView, mainDelegate];
-    }
+    // public function getMainView() as [MainView] or [MainView, MainDelegate] {
+    //     var mainView = new MainView();
+    //     var mainDelegate = new MainDelegate(self);
+    //     return [mainView, mainDelegate];
+    // }
 
     // Push the “Today’s Insights” screen
     public function pushInsightsView() as Void {
         var insightsView = new TodaysInsightsView();
         var insightsDelegate = new TodaysInsightsDelegate(self);
         WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
+    }
+
+    public function pushGraphView() as Void {
+        var insightsView = new GraphInsightsView();
+        var insightsDelegate = new GraphInsightsDelegate(self);
+        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
+    }
+
+    public function pushMainView(scanResult as ScanResult) as Void {
+        var deviceDataModel = _modelFactory.getDeviceDataModel(scanResult);
+
+        // Pair now, so the watch actually connects in the background
+        deviceDataModel.pair();
+
+        var mainView = new MainView(deviceDataModel);
+        var mainDelegate = new MainDelegate(self, deviceDataModel, mainView);
+
+        // If you want phone comm for other reasons, you can set it here
+        // _modelFactory.GetPhoneCommunication().setDeviceView(deviceViewOrSomething);
+
+        WatchUi.pushView(mainView, mainDelegate, WatchUi.SLIDE_UP);
     }
 }
