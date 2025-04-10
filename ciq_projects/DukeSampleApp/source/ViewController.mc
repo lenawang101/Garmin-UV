@@ -49,8 +49,10 @@ class ViewController {
 
     // Push the “Today’s Insights” screen
     public function pushInsightsView() as Void {
+        var scanDataModel = _modelFactory.getScanDataModel();
         var insightsView = new TodaysInsightsView();
-        var insightsDelegate = new TodaysInsightsDelegate(self);
+        // var insightsDelegate = new TodaysInsightsDelegate(self);
+        var insightsDelegate = new TodaysInsightsDelegate(self, scanDataModel);
         WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
     }
 

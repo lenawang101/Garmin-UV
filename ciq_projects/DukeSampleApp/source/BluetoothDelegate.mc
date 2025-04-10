@@ -115,6 +115,7 @@ class BluetoothDelegate extends BluetoothLowEnergy.BleDelegate {
     public function onScanStateChange(scanState as BluetoothLowEnergy.ScanState, status as BluetoothLowEnergy.Status) as Void {
         System.println("BLE: onScanStateChange: " + scanState + " status = " + status);
         var onScanResult = _onScanResult;
+        System.println("onScanResult:" + onScanResult);
         if (null != onScanResult) {
             if (onScanResult.stillAlive()) {
                 (onScanResult.get() as ScanDataModel).setScanState(scanState);

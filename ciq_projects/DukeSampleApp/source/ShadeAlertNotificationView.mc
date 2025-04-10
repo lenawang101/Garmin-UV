@@ -10,6 +10,9 @@ class ShadeAlertNotificationView extends WatchUi.View {
     private var _bgColor = 0xAA9E9E; // Light gray/beige background
     private var _circleColor = 0x336699; // Blue circle
     private var _textColor = 0xFFFFFF; // White text
+
+    // icons
+    private var _shadeAlertIcon;
     
     //! Constructor
     //! TOOD: Add @param uvDataModel The model containing the UV data
@@ -21,6 +24,7 @@ class ShadeAlertNotificationView extends WatchUi.View {
     //! @param dc Device context
     public function onLayout(dc as Dc) as Void {
         // Icon imports from Figma
+        _shadeAlertIcon = WatchUi.loadResource(Rez.Drawables.ShadeAlertHouse);
     }
 
     //! Called when this View is brought to the foreground. Restore
@@ -48,6 +52,11 @@ class ShadeAlertNotificationView extends WatchUi.View {
         // Draw main blue circle
         dc.setColor(_circleColor, _circleColor);
         dc.fillCircle(centerX, centerY, circleRadius);
+
+        // Draw shade alert icon
+        dc.drawBitmap(centerX - 25, centerY - 165, _shadeAlertIcon);
+        dc.drawText(centerX, centerY - 80, Graphics.FONT_SMALL, "Shade Alert", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(centerX, centerY + 20, Graphics.FONT_TINY, "Take breaks in the shade during extended outdoor time.", Graphics.TEXT_JUSTIFY_CENTER);
 
     }
 

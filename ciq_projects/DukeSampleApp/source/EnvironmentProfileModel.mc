@@ -132,34 +132,48 @@ class EnvironmentProfileModel {
 
     //! Process and set the custom data
     //! @param data The new custom data
+     //! Process and set the custom data
+    //! @param data The new custom data
     private function processCustomData(data as ByteArray) as Void {
         System.println("processCustomData(), data.size()=" + data.size());
+        _custom_data_byte_array = []b;
+        _custom_data_byte_array.addAll(data);
 
-        if (data.size() > 0) {
-            var uvVal = data[0].toNumber(); 
-            var now = Time.now().value();
+        // Need to add custom logic for making a web POST request here
+        var uvVal = data[0].toNumber(); // single byte from BLE
+        System.println("Got new UV reading: " + uvVal);
+        
+        // Gets epoch time
+        var now = Time.now().value();
+        System.println(now);
+        var newEntry = {
+            "timestamp" => now,
+            "uv" => uvVal
+        };
 
-            // 1) Make a dictionary
-            var newEntry = {
-                :timestamp => now,
-                :uv => uvVal
-            } as Dictionary;
+        System.println("New Entry: " + newEntry);
 
-            // 2) Load existing array from Storage
-            var storedUvReadings = Storage.getValue("uvReadings") as Array<Dictionary>?;
-            if (storedUvReadings == null) {
-                storedUvReadings = [] as Array<Dictionary>;
-            }
-
-            // 3) Add the new reading
-            storedUvReadings.add(newEntry);
-
-            // 4) Persist it
-            Storage.setValue("uvReadings", storedUvReadings);
-
-            // Then do anything else you need, e.g. request UI update...
-            WatchUi.requestUpdate();
+        // Load existing array from Storage (if it doesn’t exist yet, we make a new one)
+        var storedUvReadings = Storage.getValue("uvReadings") as Array<Dictionary>?;
+        if (storedUvReadings == null) {
+            storedUvReadings = [] as Array<Dictionary>;
+        } else {
+            // for (var i = 0; i < storedUvReadings.size(); i++) {
+            //     var entry = storedUvReadings[i];
+            //     System.println(entry);
+            // }
         }
+
+        // Append the new reading
+        storedUvReadings.add(newEntry);
+
+        // Store it back persistently
+        Storage.setValue("uvReadings", storedUvReadings);
+
+        // Call our function to send data to the server
+        // uploadUVReadingToServer(uvVal);
+
+        WatchUi.requestUpdate();
     }
 
     private function uploadUVReadingToServer(uvVal as Number) as Void {

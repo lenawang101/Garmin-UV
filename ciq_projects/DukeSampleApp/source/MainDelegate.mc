@@ -13,15 +13,19 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
         _mainView = mainView;
     }
 
-    //! If the user taps anywhere, go to the Insights screen (same as before)
-    public function onTap(clickEvent as ClickEvent) as Boolean {
-        _viewController.pushInsightsView();
-        return true;
+    // If the user swipes up, go to the Insights screen
+    public function onSwipe(swipeEvent as SwipeEvent) as Boolean {
+        System.println("Swipe direction: " + swipeEvent.getDirection());
+        if (swipeEvent.getDirection() == 0){
+            _viewController.pushInsightsView();
+            return true;
+        }
+        return false;
     }
 
     //! Handle back button - unpair the device
     public function onBack() as Boolean {
-        // _deviceDataModel.unpair();
+        _deviceDataModel.unpair();
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         return true;
     }

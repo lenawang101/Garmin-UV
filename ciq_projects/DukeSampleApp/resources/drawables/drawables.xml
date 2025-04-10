@@ -21,4 +21,5 @@
     <bitmap id="Reminder" filename="ic_figma_reminder.png" />
     <bitmap id="ShadeAlert" filename="ic_figma_shade_alert.png" />
     <bitmap id="Location" filename="ic_figma_location.png" />
+    <bitmap id="ShadeAlertHouse" filename="shade_alert_house.png" />
 </drawables>
