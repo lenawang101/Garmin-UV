@@ -53,22 +53,41 @@ class ViewController {
         var insightsView = new TodaysInsightsView();
         // var insightsDelegate = new TodaysInsightsDelegate(self);
         var insightsDelegate = new TodaysInsightsDelegate(self, scanDataModel);
-        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
+        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_UP);
     }
 
     public function pushGraphView() as Void {
         var insightsView = new GraphInsightsView();
         var insightsDelegate = new GraphInsightsDelegate(self);
-        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_LEFT);
+        WatchUi.pushView(insightsView, insightsDelegate, WatchUi.SLIDE_UP);
+    }
+
+    public function pushRawDataView() as Void {
+        var rawDataView = new RawDataView();
+        var rawDataDelegate = new RawDataDelegate(self);
+        WatchUi.pushView(rawDataView, rawDataDelegate, WatchUi.SLIDE_UP);
+    }
+
+    public function pushShadeNotificationView() as Void {
+        var shadeView = new ShadeAlertNotificationView();
+        var shadeDelegate = new ShadeAlertNotificationDelegate(self); // 
+        WatchUi.pushView(shadeView, shadeDelegate, WatchUi.SLIDE_UP);
+    }
+    
+    public function pushSunscreenReminder() as Void {
+        var shadeView = new SunscreenReminderView();
+        var shadeDelegate = new SunscreenReminderDelegate(self); // 
+        WatchUi.pushView(shadeView, shadeDelegate, WatchUi.SLIDE_UP);
     }
 
     public function pushMainView(scanResult as ScanResult) as Void {
         var deviceDataModel = _modelFactory.getDeviceDataModel(scanResult);
+        System.println("deviceDataModel" + deviceDataModel);
+        if (!deviceDataModel.isConnected()) {
+            deviceDataModel.pair();
+        }
 
-        // Pair now, so the watch actually connects in the background
-        deviceDataModel.pair();
-
-        var mainView = new MainView(deviceDataModel);
+        var mainView = new MainView(deviceDataModel, self);
         var mainDelegate = new MainDelegate(self, deviceDataModel, mainView);
 
         // If you want phone comm for other reasons, you can set it here

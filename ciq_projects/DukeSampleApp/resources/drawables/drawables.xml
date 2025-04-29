@@ -22,4 +22,7 @@
     <bitmap id="ShadeAlert" filename="ic_figma_shade_alert.png" />
     <bitmap id="Location" filename="ic_figma_location.png" />
     <bitmap id="ShadeAlertHouse" filename="shade_alert_house.png" />
+    <bitmap id="CurrentToggle" filename="ic_current.png" />
+    <bitmap id="NextToggle" filename="ic_next.png" />
+    <bitmap id="SunscreenAlarm" filename="sunscreen_alarm.png" />
 </drawables>

@@ -39,12 +39,21 @@ class MainView extends WatchUi.View {
     private var _bgColor = 0xAA9E9E;
     private var _circleColor = 0x336699;
     private var _textColor = 0xFFFFFF;
-    private var _accumulatedUv;
+
+    private var _currentPage;
+    private var _nextPage;
+    private var _lastPage;
+
+    var _shadeNotified = false;
+    // new
+    private var _viewController as ViewController;
 
     //! Modified constructor
-    public function initialize(deviceDataModel as DeviceDataModel) {
+    public function initialize(deviceDataModel as DeviceDataModel, viewController as ViewController) {
         View.initialize();
         _deviceDataModel = deviceDataModel;
+        // new
+        _viewController = viewController;
 
         // Start with some default or placeholder
         _uvIndex = 0;
@@ -68,6 +77,10 @@ class MainView extends WatchUi.View {
         _topColorArc = WatchUi.loadResource(Rez.Drawables.TopColor);
         _topRightColorArc = WatchUi.loadResource(Rez.Drawables.TopRightColor);
         _rightColorArc = WatchUi.loadResource(Rez.Drawables.RightColor);
+
+        _currentPage = WatchUi.loadResource(Rez.Drawables.CurrentToggle);
+        _nextPage = WatchUi.loadResource(Rez.Drawables.NextToggle);
+        _lastPage = WatchUi.loadResource(Rez.Drawables.NextToggle);
     }
 
     //! Called when this View is brought to the foreground. Restore
@@ -112,10 +125,14 @@ class MainView extends WatchUi.View {
                     if (uvVal <= 2) {
                         _uvStatus = "Low";
                         _leftArc = _leftColorArc;
+                        _shadeNotified = false;
                     } else if (uvVal <= 5) {
                         _uvStatus = "Moderate";
                         _topLeftArc = _topLeftColorArc;
-                    } else if (uvVal <= 7) {
+                        _shadeNotified = false;
+                    } else if (uvVal <= 7 && !_shadeNotified) {
+                        _shadeNotified = true;
+                        _viewController.pushShadeNotificationView();
                         _uvStatus = "High";
                         _topArc = _topColorArc;
                     } else if (uvVal <= 10) {
@@ -151,6 +168,9 @@ class MainView extends WatchUi.View {
         dc.drawBitmap(centerX + 90, centerY - 160, _topRightArc);
         dc.drawBitmap(centerX + 165, centerY - 65, _rightArc);
         
+        dc.drawBitmap(centerX - 170, centerY - 30, _currentPage);
+        dc.drawBitmap(centerX - 170, centerY - 10, _nextPage);
+        dc.drawBitmap(centerX - 170, centerY + 10, _lastPage);
 
         // Use the updated _uvIndex and _uvStatus here:
         dc.setColor(_textColor, Graphics.COLOR_TRANSPARENT);

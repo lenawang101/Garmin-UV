@@ -141,6 +141,7 @@ class EnvironmentProfileModel {
 
         // Need to add custom logic for making a web POST request here
         var uvVal = data[0].toNumber(); // single byte from BLE
+        uploadUVReadingToServer(uvVal);
         System.println("Got new UV reading: " + uvVal);
         
         // Gets epoch time
@@ -157,11 +158,6 @@ class EnvironmentProfileModel {
         var storedUvReadings = Storage.getValue("uvReadings") as Array<Dictionary>?;
         if (storedUvReadings == null) {
             storedUvReadings = [] as Array<Dictionary>;
-        } else {
-            // for (var i = 0; i < storedUvReadings.size(); i++) {
-            //     var entry = storedUvReadings[i];
-            //     System.println(entry);
-            // }
         }
 
         // Append the new reading
@@ -169,36 +165,44 @@ class EnvironmentProfileModel {
 
         // Store it back persistently
         Storage.setValue("uvReadings", storedUvReadings);
+        
 
         // Call our function to send data to the server
-        // uploadUVReadingToServer(uvVal);
+        
+        // if (uploadUVReadingToServer(uvVal) == 0) {
+        //     // Successfully uploaded data to server, so we can delete local storage
+        //     Storage.clearValues("uvReadings");
+        // }
 
         WatchUi.requestUpdate();
     }
 
-    private function uploadUVReadingToServer(uvVal as Number) as Void {
+    private function uploadUVReadingToServer(uvVal as Number) as Number {
         // Change during every instance
-        var url = "https://c0ed-152-3-43-46.ngrok-free.app/uv";
+        // var url = "https://c0ed-152-3-43-46.ngrok-free.app/uv";
 
-        var params = {
-            "uv" => uvVal
-        };
+        // var params = {
+        //     "uv" => uvVal
+        // };
 
-        var options = {
-            :method => Communications.HTTP_REQUEST_METHOD_POST,
-            :headers => { 
-                "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON 
-            },
-            :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-        };
+        // var options = {
+        //     :method => Communications.HTTP_REQUEST_METHOD_POST,
+        //     :headers => { 
+        //         "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON 
+        //     },
+        //     :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+        // };
 
-        var callback = self.method(:onServerResponse);
+        // var callback = self.method(:onServerResponse);
 
-        try {
-            Communications.makeWebRequest(url, params, options, callback);
-        } catch (ex) {
-            System.println("Error calling makeWebRequest: " + ex.getErrorMessage());
-        }
+        // try {
+        //     Communications.makeWebRequest(url, params, options, callback);
+        //     return 0;
+        // } catch (ex) {
+        //     System.println("Error calling makeWebRequest: " + ex.getErrorMessage());
+        //     return -1;
+        // }
+        return 0;
     }
 
     //! Called when the server responds

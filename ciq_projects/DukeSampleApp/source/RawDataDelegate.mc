@@ -1,7 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class GraphInsightsDelegate extends WatchUi.BehaviorDelegate {
+class RawDataDelegate extends WatchUi.BehaviorDelegate {
     // Will need viewController for further analysis pages
     private var _viewController as ViewController;
 
@@ -15,14 +15,10 @@ class GraphInsightsDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    // If the user swipes down, go to the Insights screen
+    // If the user swipes down, go to the graphs screen
     public function onSwipe(swipeEvent as SwipeEvent) as Boolean {
         if (swipeEvent.getDirection() == 2){
-            _viewController.pushInsightsView();
-            return true;
-        }
-        else if (swipeEvent.getDirection() == 0){
-            _viewController.pushRawDataView();
+            _viewController.pushGraphView();
             return true;
         }
         return false;

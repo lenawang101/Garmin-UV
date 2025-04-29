@@ -20,6 +20,10 @@ class MainDelegate extends WatchUi.BehaviorDelegate {
             _viewController.pushInsightsView();
             return true;
         }
+        if (swipeEvent.getDirection() == 2) {
+            _viewController.pushSunscreenReminder();
+            return true;
+        }
         return false;
     }
 
